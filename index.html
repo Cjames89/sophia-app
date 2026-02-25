@@ -6,41 +6,24 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#08080f">
-  <title>Sophia — Philosophy Feed</title>
+  <title>Sophia — TikTok for Philosophy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg: #08080f;
-      --text: #e8e4d9;
-      --muted: #7a7488;
-      --ancient: #c9a84c;
-      --stoic: #7a9e6b;
-      --exist: #9b73d0;
-      --tao: #5ca8d4;
-      --absurd: #e06b5a;
-      --rational: #4ab89a;
-      --confucian: #d4803a;
-      --analytic: #8a9cb5;
-    }
-
     html, body {
-      height: 100%;
-      width: 100%;
+      height: 100%; width: 100%;
       overflow: hidden;
-      background: var(--bg);
-      color: var(--text);
+      background: #08080f;
+      color: #e8e4d9;
       font-family: 'Lora', Georgia, serif;
       -webkit-tap-highlight-color: transparent;
       touch-action: pan-y;
     }
 
-    /* ── FEED ── */
     #feed {
-      height: 100vh;
-      height: 100dvh;
+      height: 100vh; height: 100dvh;
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
       -webkit-overflow-scrolling: touch;
@@ -51,43 +34,120 @@
 
     /* ── CARD BASE ── */
     .card {
-      height: 100vh;
-      height: 100dvh;
+      height: 100vh; height: 100dvh;
       width: 100%;
       scroll-snap-align: start;
       scroll-snap-stop: always;
       position: relative;
+      isolation: isolate;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       padding: 72px 28px 100px;
       overflow: hidden;
-      background: var(--bg);
+      background: #08080f;
     }
 
-    /* Subtle accent glow */
+    /* Background image — sits below all content */
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0.22;
+      z-index: -1;
+      pointer-events: none;
+      user-select: none;
+      display: block;
+    }
+
+    /* Subtle bottom gradient so text doesn't fight image */
     .card::after {
       content: '';
       position: absolute;
-      bottom: -120px;
-      left: -80px;
-      width: 360px;
-      height: 360px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--accent, transparent) 0%, transparent 70%);
-      opacity: 0.08;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(8,8,15,0.55) 0%,
+        rgba(8,8,15,0.3) 40%,
+        rgba(8,8,15,0.55) 75%,
+        rgba(8,8,15,0.82) 100%);
+      z-index: -1;
       pointer-events: none;
     }
+
+    /* ── INTRO / SHARE CARD ── */
+    .intro-card {
+      justify-content: center;
+      text-align: center;
+      padding: 40px 32px;
+    }
+    .intro-card .card-bg {
+      opacity: 0.38;
+      object-position: center center;
+    }
+    .intro-eyebrow {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 10px;
+      letter-spacing: 7px;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .intro-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(58px, 17vw, 104px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .intro-rule {
+      width: 50px; height: 1px;
+      background: #c9a84c;
+      margin: 0 auto 16px;
+      opacity: 0.8;
+    }
+    .intro-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #c9a84c;
+      margin-bottom: 28px;
+    }
+    .intro-body {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(14px, 3.8vw, 17px);
+      color: rgba(232,228,217,0.58);
+      line-height: 1.9;
+      margin-bottom: 50px;
+      max-width: 340px;
+    }
+    .intro-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: bob 2.2s ease-in-out infinite;
+    }
+    .intro-cta span {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 9px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .intro-cta svg { color: rgba(255,255,255,0.25); }
 
     /* ── APP HEADER ── */
     .app-header {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: env(safe-area-inset-top, 14px) 20px 14px;
-      padding-top: max(env(safe-area-inset-top), 14px);
+      top: 0; left: 0; right: 0;
+      padding: max(env(safe-area-inset-top), 14px) 20px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -95,20 +155,18 @@
     }
     .app-name {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 12px; font-weight: 600;
       letter-spacing: 5px;
       color: rgba(255,255,255,0.18);
       text-transform: uppercase;
     }
     .card-counter {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 11px;
-      letter-spacing: 2px;
+      font-size: 11px; letter-spacing: 2px;
       color: rgba(255,255,255,0.15);
     }
 
-    /* ── RIGHT SIDEBAR (like TikTok) ── */
+    /* ── SIDEBAR ── */
     .sidebar {
       position: absolute;
       right: 14px;
@@ -120,26 +178,17 @@
       z-index: 10;
     }
     .action-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
+      background: none; border: none; cursor: pointer;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
       padding: 4px;
       color: rgba(255,255,255,0.45);
       transition: color 0.2s;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
-    .action-btn svg { width: 28px; height: 28px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.6)); }
-    .action-btn span {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 11px;
-      letter-spacing: 1px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-    }
+    .action-btn svg { width: 28px; height: 28px; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.7)); }
+    .action-btn span { font-family: 'Rajdhani', sans-serif; font-size: 11px; letter-spacing: 1px; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
     .action-btn.liked { color: #e05555; }
     .action-btn.saved { color: #c9a84c; }
     @keyframes pop {
@@ -152,271 +201,188 @@
     /* ── BOTTOM BAR ── */
     .bottom-bar {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       padding: 14px 20px;
       padding-bottom: max(env(safe-area-inset-bottom), 14px);
-      background: linear-gradient(to top, rgba(8,8,15,0.9) 0%, transparent 100%);
+      background: linear-gradient(to top, rgba(8,8,15,0.92) 0%, transparent 100%);
+      z-index: 10;
     }
     .school-pill {
       display: inline-block;
       font-family: 'Rajdhani', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 20px;
-      border: 1px solid;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 20px; border: 1px solid;
     }
 
-    /* ── PROGRESS BAR ── */
-    #progress {
-      position: fixed;
-      right: 0;
-      top: 0;
-      width: 2px;
-      background: rgba(255,255,255,0.15);
-      z-index: 100;
-      height: 100vh;
-    }
-    #progress-fill {
-      width: 100%;
-      height: 0%;
-      background: rgba(255,255,255,0.4);
-      transition: height 0.2s;
-    }
+    /* ── PROGRESS ── */
+    #progress { position: fixed; right: 0; top: 0; width: 2px; background: rgba(255,255,255,0.1); z-index: 100; height: 100vh; }
+    #progress-fill { width: 100%; height: 0%; background: rgba(255,255,255,0.35); transition: height 0.2s; }
 
-    /* ══════════════════════════════
-       QUOTE CARD
-    ══════════════════════════════ */
+    /* ══ QUOTE ══ */
     .quote .big-mark {
       font-family: 'Playfair Display', serif;
-      font-size: 100px;
-      line-height: 0.65;
-      color: var(--accent, #ffffff);
-      opacity: 0.12;
+      font-size: 100px; line-height: 0.65;
+      color: var(--accent, #fff);
+      opacity: 0.15;
       align-self: flex-start;
-      margin-left: -8px;
-      margin-bottom: 4px;
-      pointer-events: none;
+      margin-left: -8px; margin-bottom: 4px;
+      pointer-events: none; text-shadow: 0 0 40px var(--accent, transparent);
     }
     .quote .quote-text {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(17px, 4.8vw, 26px);
-      font-style: italic;
-      line-height: 1.65;
-      text-align: center;
-      color: var(--text);
-      max-width: 600px;
+      font-size: clamp(17px, 4.8vw, 27px);
+      font-style: italic; line-height: 1.65;
+      text-align: center; max-width: 600px;
       margin-bottom: 28px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
     }
     .quote .author-name {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 3.5px;
-      text-transform: uppercase;
-      color: var(--accent, var(--muted));
-      margin-bottom: 5px;
-      text-align: center;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 3.5px; text-transform: uppercase;
+      color: var(--accent, #9990a0);
+      margin-bottom: 5px; text-align: center;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
     .quote .author-era {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 12px;
-      color: var(--muted);
-      text-align: center;
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 12px; color: #7a7488; text-align: center;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
 
-    /* ══════════════════════════════
-       PHILOSOPHER SPOTLIGHT
-    ══════════════════════════════ */
+    /* ══ SPOTLIGHT ══ */
     .spotlight .section-label {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 10px;
-      letter-spacing: 4px;
-      color: var(--accent, var(--muted));
-      text-transform: uppercase;
-      margin-bottom: 18px;
-      text-align: center;
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent, #7a7488);
+      margin-bottom: 18px; text-align: center;
       padding-bottom: 12px;
       border-bottom: 1px solid rgba(255,255,255,0.07);
-      width: 100%;
-      max-width: 480px;
+      width: 100%; max-width: 480px;
     }
     .spotlight .phil-name {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(26px, 7vw, 46px);
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 4px;
+      font-size: clamp(26px, 7vw, 46px); font-weight: 700;
+      text-align: center; margin-bottom: 4px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     }
     .spotlight .phil-years {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: 2px;
-      margin-bottom: 24px;
-      text-align: center;
+      font-size: 13px; color: #7a7488;
+      letter-spacing: 2px; margin-bottom: 24px; text-align: center;
     }
     .facts { list-style: none; max-width: 480px; width: 100%; }
     .facts li {
       font-size: clamp(13px, 3.2vw, 14.5px);
-      color: rgba(232,228,217,0.8);
+      color: rgba(232,228,217,0.82);
       padding: 10px 0;
       border-bottom: 1px solid rgba(255,255,255,0.05);
-      display: flex;
-      gap: 12px;
-      line-height: 1.55;
+      display: flex; gap: 12px; line-height: 1.55;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
     }
-    .facts li::before { content: '—'; color: var(--accent, var(--muted)); flex-shrink: 0; }
+    .facts li::before { content: '—'; color: var(--accent, #7a7488); flex-shrink: 0; }
 
-    /* ══════════════════════════════
-       THOUGHT EXPERIMENT
-    ══════════════════════════════ */
+    /* ══ THOUGHT EXPERIMENT ══ */
     .thought .section-label {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 10px;
-      letter-spacing: 4px;
-      color: var(--accent, var(--muted));
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      text-align: center;
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent, #7a7488);
+      margin-bottom: 14px; text-align: center;
     }
     .thought .exp-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(22px, 5.5vw, 36px);
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 22px;
+      font-size: clamp(22px, 5.5vw, 36px); font-weight: 700;
+      text-align: center; margin-bottom: 22px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     }
     .thought .scenario {
       font-size: clamp(13px, 3.4vw, 15px);
-      line-height: 1.8;
-      color: rgba(232,228,217,0.78);
-      max-width: 500px;
-      text-align: center;
-      margin-bottom: 22px;
+      line-height: 1.8; color: rgba(232,228,217,0.78);
+      max-width: 500px; text-align: center; margin-bottom: 22px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
     }
     .thought .the-q {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
+      font-family: 'Playfair Display', serif; font-style: italic;
       font-size: clamp(14px, 3.6vw, 17px);
-      color: var(--accent, var(--text));
-      max-width: 460px;
-      text-align: center;
+      color: var(--accent, #e8e4d9);
+      max-width: 460px; text-align: center;
       padding: 16px 20px;
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 4px;
-      background: rgba(255,255,255,0.02);
+      background: rgba(8,8,15,0.4);
     }
 
-    /* ══════════════════════════════
-       BOOK REC
-    ══════════════════════════════ */
+    /* ══ BOOK REC ══ */
     .book .section-label {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 10px;
-      letter-spacing: 4px;
-      color: var(--accent, var(--muted));
-      text-transform: uppercase;
-      margin-bottom: 18px;
-      text-align: center;
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent, #7a7488); margin-bottom: 18px; text-align: center;
     }
     .book .book-icon { font-size: 44px; margin-bottom: 14px; }
     .book .book-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(20px, 5vw, 32px);
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 6px;
+      font-size: clamp(20px, 5vw, 32px); font-weight: 700;
+      text-align: center; margin-bottom: 6px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
     }
     .book .book-author {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent, var(--muted));
-      margin-bottom: 20px;
-      text-align: center;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent, #7a7488); margin-bottom: 20px; text-align: center;
     }
     .book .book-desc {
       font-size: clamp(13px, 3.4vw, 14.5px);
-      line-height: 1.8;
-      color: rgba(232,228,217,0.72);
-      max-width: 460px;
-      text-align: center;
-      margin-bottom: 12px;
+      line-height: 1.8; color: rgba(232,228,217,0.72);
+      max-width: 460px; text-align: center; margin-bottom: 12px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
     }
     .book .why-read {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 13px;
-      color: rgba(232,228,217,0.5);
-      max-width: 420px;
-      text-align: center;
-      margin-bottom: 22px;
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 13px; color: rgba(232,228,217,0.5);
+      max-width: 420px; text-align: center; margin-bottom: 22px;
     }
     .book .cta-btn {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: var(--bg);
+      font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      font-weight: 600; color: #08080f;
       background: var(--accent, #c9a84c);
-      border: none;
-      padding: 13px 30px;
-      border-radius: 2px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
+      border: none; padding: 13px 30px; border-radius: 2px;
+      cursor: pointer; text-decoration: none; display: inline-block;
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* ══════════════════════════════
-       AD CARD
-    ══════════════════════════════ */
     .ad-card { background: #0c0910; }
     .ad-label {
       position: absolute;
-      top: max(env(safe-area-inset-top), 14px);
-      top: calc(max(env(safe-area-inset-top), 0px) + 14px);
-      right: 20px;
+      top: max(env(safe-area-inset-top, 0px), 14px);
+      right: 20px; z-index: 11;
       font-family: 'Rajdhani', sans-serif;
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,0.2);
-      text-transform: uppercase;
+      font-size: 9px; letter-spacing: 2px;
+      color: rgba(255,255,255,0.2); text-transform: uppercase;
     }
 
     /* ── SCROLL HINT ── */
     .scroll-hint {
       position: absolute;
-      bottom: calc(env(safe-area-inset-bottom, 0px) + 56px);
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 60px);
+      left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
       pointer-events: none;
+      animation: bob 2.2s ease-in-out infinite;
     }
     .scroll-hint span {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
+      font-size: 9px; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.22);
     }
-    .scroll-hint svg { color: rgba(255,255,255,0.2); }
+    .scroll-hint svg { color: rgba(255,255,255,0.18); }
+
     @keyframes bob {
       0%, 100% { transform: translateX(-50%) translateY(0); }
       50% { transform: translateX(-50%) translateY(5px); }
     }
-    .scroll-hint { animation: bob 2.2s ease-in-out infinite; }
 
     @media (max-width: 380px) {
       .card { padding: 68px 20px 96px; }
@@ -430,12 +396,25 @@
 
 <div id="feed">
 
+  <!-- ═══ INTRO / SHARE CARD — Roman Forum ═══ -->
+  <div class="card intro-card" data-id="intro">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Roman_Forum_from_the_Palatine_in_2004.jpg" alt="Roman Forum" loading="eager">
+    <p class="intro-eyebrow">A gift for you</p>
+    <h1 class="intro-title">Sophia</h1>
+    <div class="intro-rule"></div>
+    <p class="intro-sub">TikTok for Philosophy</p>
+    <p class="intro-body">From the Roman Forum where Cicero once spoke — to the questions that still have no answer.</p>
+    <p class="intro-body" style="margin-top:-32px; font-size: clamp(11px,3vw,13px)">Quotes &nbsp;·&nbsp; Thought Experiments &nbsp;·&nbsp; Books</p>
+    <div class="intro-cta">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      <span>Scroll to begin</span>
+    </div>
+  </div>
+
   <!-- ═══ 1. QUOTE — Socrates ═══ -->
   <div class="card quote" style="--accent: #c9a84c" data-id="q1">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">1 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Socrate_du_Louvre.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">1 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">The unexamined life is not worth living.</p>
     <p class="author-name">Socrates</p>
@@ -450,21 +429,14 @@
         <span>Save</span>
       </button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">Ancient Greek</div>
-    </div>
-    <div class="scroll-hint">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      <span>Scroll</span>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">Ancient Greek</div></div>
+    <div class="scroll-hint"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg><span>Scroll</span></div>
   </div>
 
   <!-- ═══ 2. SPOTLIGHT — Marcus Aurelius ═══ -->
   <div class="card spotlight" style="--accent: #7a9e6b" data-id="s1">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">2 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Marcus_Aurelius_Glyptothek_Munich.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">2 / 25</span></div>
     <div class="section-label">Philosopher Spotlight</div>
     <h2 class="phil-name">Marcus Aurelius</h2>
     <p class="phil-years">121 – 180 AD · Roman Emperor & Stoic</p>
@@ -476,101 +448,61 @@
       <li>His core teaching: control what you can; accept what you cannot</li>
     </ul>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="s1" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="s1" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="s1" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="s1" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div></div>
   </div>
 
   <!-- ═══ 3. QUOTE — Marcus Aurelius ═══ -->
   <div class="card quote" style="--accent: #7a9e6b" data-id="q2">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">3 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Marcus_Aurelius_Glyptothek_Munich.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">3 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">You have power over your mind, not outside events. Realize this, and you will find strength.</p>
     <p class="author-name">Marcus Aurelius</p>
     <p class="author-era">Meditations · 161–180 AD</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q2" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q2" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q2" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q2" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div></div>
   </div>
 
   <!-- ═══ 4. THOUGHT EXPERIMENT — Plato's Cave ═══ -->
   <div class="card thought" style="--accent: #c9a84c" data-id="t1">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">4 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Plato_Silanion_Musei_Capitolini_MC1377.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">4 / 25</span></div>
     <div class="section-label">Thought Experiment</div>
     <h2 class="exp-title">Plato's Cave</h2>
     <p class="scenario">Prisoners are chained in a cave, only able to see shadows cast on a wall. They believe the shadows <em>are</em> reality. One prisoner escapes, sees the sun, and returns to tell the others — but they refuse to believe him.</p>
     <div class="the-q">What if everything you perceive is just a shadow of a deeper truth?</div>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="t1" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="t1" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="t1" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="t1" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">Ancient Greek</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">Ancient Greek</div></div>
   </div>
 
   <!-- ═══ 5. QUOTE — Nietzsche ═══ -->
   <div class="card quote" style="--accent: #9b73d0" data-id="q3">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">5 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Nietzsche187a.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">5 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">He who has a why to live can bear almost any how.</p>
     <p class="author-name">Friedrich Nietzsche</p>
     <p class="author-era">Twilight of the Idols · 1889</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q3" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q3" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q3" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q3" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div></div>
   </div>
 
   <!-- ═══ 6. BOOK REC — Meditations ═══ -->
   <div class="card book" style="--accent: #7a9e6b" data-id="b1">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">6 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Marcus_Aurelius_Glyptothek_Munich.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">6 / 25</span></div>
     <div class="section-label">Book Recommendation</div>
     <div class="book-icon">📖</div>
     <h2 class="book-title">Meditations</h2>
@@ -579,518 +511,319 @@
     <p class="why-read">Why read it: The most practical philosophy book ever written. Open to any page and find something immediately useful.</p>
     <a class="cta-btn" href="https://www.amazon.com/s?k=Meditations+Marcus+Aurelius" target="_blank">Find on Amazon</a>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="b1" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="b1" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="b1" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="b1" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div></div>
   </div>
 
   <!-- ═══ 7. QUOTE — Seneca ═══ -->
   <div class="card quote" style="--accent: #7a9e6b" data-id="q4">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">7 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Pseudo-Seneca_MAN_Napoli_Inv5616.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">7 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">We suffer more in imagination than in reality.</p>
     <p class="author-name">Seneca</p>
     <p class="author-era">Letters to Lucilius · ~65 AD</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q4" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q4" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q4" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q4" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div></div>
   </div>
 
   <!-- ═══ 8. THOUGHT EXPERIMENT — Ship of Theseus ═══ -->
   <div class="card thought" style="--accent: #5ca8d4" data-id="t2">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">8 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Olympias_1987.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">8 / 25</span></div>
     <div class="section-label">Thought Experiment</div>
     <h2 class="exp-title">Ship of Theseus</h2>
     <p class="scenario">Theseus's ship is preserved as a monument. As planks rot, each is replaced — one by one — until eventually every single piece of wood is new. Then someone rebuilds the original ship using all the old planks.</p>
     <div class="the-q">Which ship is truly the Ship of Theseus? And what does that tell us about identity?</div>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="t2" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="t2" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="t2" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="t2" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#5ca8d4;border-color:#5ca8d440;background:#5ca8d410">Metaphysics</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#5ca8d4;border-color:#5ca8d440;background:#5ca8d410">Metaphysics</div></div>
   </div>
 
   <!-- ═══ 9. QUOTE — Sartre ═══ -->
   <div class="card quote" style="--accent: #9b73d0" data-id="q5">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">9 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jean_Paul_Sartre_1965.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">9 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">Man is condemned to be free. Condemned because he did not create himself, yet is nonetheless free; because, once cast into the world, he is responsible for everything he does.</p>
     <p class="author-name">Jean-Paul Sartre</p>
     <p class="author-era">Existentialism is a Humanism · 1946</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q5" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q5" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q5" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q5" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div></div>
   </div>
 
   <!-- ═══ 10. SPOTLIGHT — Nietzsche ═══ -->
   <div class="card spotlight" style="--accent: #9b73d0" data-id="s2">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">10 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Nietzsche187a.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">10 / 25</span></div>
     <div class="section-label">Philosopher Spotlight</div>
     <h2 class="phil-name">Friedrich Nietzsche</h2>
     <p class="phil-years">1844 – 1900 · German Philosopher</p>
     <ul class="facts">
       <li>Declared "God is dead" — not as celebration, but as a diagnosis of modern culture</li>
-      <li>Introduced the concept of <em>Übermensch</em>: the individual who creates their own values</li>
-      <li>Suffered a mental breakdown in 1889 and never recovered; his sister distorted his legacy</li>
-      <li>Deeply influenced by music — was close friends with composer Richard Wagner</li>
-      <li>His philosophy: life is suffering, but the answer is passionate creative will — not escape</li>
+      <li>Introduced <em>Übermensch</em>: the individual who creates their own values</li>
+      <li>Suffered a mental breakdown in 1889 and never recovered</li>
+      <li>Close friends with composer Richard Wagner before a dramatic falling out</li>
+      <li>His answer to suffering: passionate creative will — not escape</li>
     </ul>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="s2" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="s2" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="s2" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="s2" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div></div>
   </div>
 
   <!-- ═══ 11. QUOTE — Camus ═══ -->
   <div class="card quote" style="--accent: #e06b5a" data-id="q6">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">11 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Albert_Camus.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">11 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">One must imagine Sisyphus happy.</p>
     <p class="author-name">Albert Camus</p>
     <p class="author-era">The Myth of Sisyphus · 1942</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q6" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q6" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q6" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q6" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#e06b5a;border-color:#e06b5a40;background:#e06b5a10">Absurdism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#e06b5a;border-color:#e06b5a40;background:#e06b5a10">Absurdism</div></div>
   </div>
 
   <!-- ═══ 12. AD — Man's Search for Meaning ═══ -->
   <div class="card book ad-card" style="--accent: #4ab89a" data-id="ad1">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">12 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Viktor_Frankl2.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">12 / 25</span></div>
     <div class="ad-label">Featured</div>
     <div class="section-label">Essential Reading</div>
     <div class="book-icon">🕯️</div>
     <h2 class="book-title">Man's Search for Meaning</h2>
     <p class="book-author">Viktor Frankl · 1946</p>
-    <p class="book-desc">A psychiatrist's account of surviving Nazi concentration camps — and what he discovered about the human drive to find meaning even in the most extreme suffering.</p>
+    <p class="book-desc">A psychiatrist's account of surviving Nazi concentration camps — and what he discovered about the human drive to find meaning even in extreme suffering.</p>
     <p class="why-read">Why read it: Proof that purpose is more powerful than circumstance. One of the most important books of the 20th century.</p>
     <a class="cta-btn" style="background:#4ab89a" href="https://www.amazon.com/s?k=Man%27s+Search+for+Meaning+Frankl" target="_blank">Find on Amazon</a>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="ad1" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="ad1" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="ad1" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="ad1" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#4ab89a;border-color:#4ab89a40;background:#4ab89a10">Logotherapy</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#4ab89a;border-color:#4ab89a40;background:#4ab89a10">Logotherapy</div></div>
   </div>
 
   <!-- ═══ 13. QUOTE — Lao Tzu ═══ -->
   <div class="card quote" style="--accent: #5ca8d4" data-id="q7">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">13 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">13 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">Nature does not hurry, yet everything is accomplished.</p>
     <p class="author-name">Lao Tzu</p>
     <p class="author-era">Tao Te Ching · ~400 BC</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q7" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q7" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q7" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q7" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#5ca8d4;border-color:#5ca8d440;background:#5ca8d410">Taoism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#5ca8d4;border-color:#5ca8d440;background:#5ca8d410">Taoism</div></div>
   </div>
 
-  <!-- ═══ 14. THOUGHT EXPERIMENT — The Trolley Problem ═══ -->
+  <!-- ═══ 14. THOUGHT EXPERIMENT — Trolley Problem ═══ -->
   <div class="card thought" style="--accent: #e06b5a" data-id="t3">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">14 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Fotothek_df_ps_0000010_Straßenbahn_%5E_Straßenbahnlinie.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">14 / 25</span></div>
     <div class="section-label">Thought Experiment</div>
     <h2 class="exp-title">The Trolley Problem</h2>
-    <p class="scenario">A runaway trolley is heading toward five people tied to the tracks. You can pull a lever to divert it to a side track — but one person is tied there. If you do nothing, five die. If you act, one dies.</p>
+    <p class="scenario">A runaway trolley is heading toward five people tied to the tracks. You can pull a lever to divert it — but one person is on the side track. Do nothing: five die. Act: one dies.</p>
     <div class="the-q">Is there a moral difference between killing and letting die? Does intention matter — or only outcome?</div>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="t3" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="t3" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="t3" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="t3" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#e06b5a;border-color:#e06b5a40;background:#e06b5a10">Ethics</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#e06b5a;border-color:#e06b5a40;background:#e06b5a10">Ethics</div></div>
   </div>
 
   <!-- ═══ 15. QUOTE — Descartes ═══ -->
   <div class="card quote" style="--accent: #4ab89a" data-id="q8">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">15 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">15 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">I think, therefore I am.</p>
     <p class="author-name">René Descartes</p>
     <p class="author-era">Discourse on the Method · 1637</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q8" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q8" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q8" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q8" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#4ab89a;border-color:#4ab89a40;background:#4ab89a10">Rationalism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#4ab89a;border-color:#4ab89a40;background:#4ab89a10">Rationalism</div></div>
   </div>
 
   <!-- ═══ 16. SPOTLIGHT — Albert Camus ═══ -->
   <div class="card spotlight" style="--accent: #e06b5a" data-id="s3">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">16 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Albert_Camus.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">16 / 25</span></div>
     <div class="section-label">Philosopher Spotlight</div>
     <h2 class="phil-name">Albert Camus</h2>
     <p class="phil-years">1913 – 1960 · French-Algerian Philosopher & Author</p>
     <ul class="facts">
-      <li>Nobel Prize in Literature at age 44 — one of the youngest recipients ever</li>
+      <li>Nobel Prize in Literature at 44 — one of the youngest recipients ever</li>
       <li>Central idea: life is absurd, but the answer is defiant joy — not despair</li>
-      <li>His most famous novel, <em>The Stranger</em>, opens with: "Mother died today"</li>
-      <li>Rejected the "existentialist" label — he and Sartre eventually had a public falling out</li>
-      <li>Died in a car accident at 46. A train ticket was found in his pocket — he'd changed plans last minute</li>
+      <li><em>The Stranger</em> opens with: "Mother died today. Or maybe yesterday."</li>
+      <li>Rejected the "existentialist" label — he and Sartre had a famous public falling out</li>
+      <li>Died in a car accident at 46 — a train ticket was found in his pocket</li>
     </ul>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="s3" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="s3" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="s3" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="s3" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#e06b5a;border-color:#e06b5a40;background:#e06b5a10">Absurdism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#e06b5a;border-color:#e06b5a40;background:#e06b5a10">Absurdism</div></div>
   </div>
 
   <!-- ═══ 17. QUOTE — Kierkegaard ═══ -->
   <div class="card quote" style="--accent: #9b73d0" data-id="q9">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">17 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/S%C3%B8ren_Kierkegaard_(1813-1855).jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">17 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">Life can only be understood backwards; but it must be lived forwards.</p>
     <p class="author-name">Søren Kierkegaard</p>
     <p class="author-era">Journals · 1843</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q9" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q9" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q9" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q9" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div></div>
   </div>
 
   <!-- ═══ 18. BOOK REC — Sophie's World ═══ -->
   <div class="card book" style="--accent: #c9a84c" data-id="b2">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">18 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Blue_Marble_(remastered).jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">18 / 25</span></div>
     <div class="section-label">Book Recommendation</div>
     <div class="book-icon">🌍</div>
     <h2 class="book-title">Sophie's World</h2>
     <p class="book-author">Jostein Gaarder · 1991</p>
-    <p class="book-desc">A 14-year-old girl receives mysterious letters asking "Who are you?" and "Where does the world come from?" — leading her through the entire history of Western philosophy as a novel.</p>
+    <p class="book-desc">A 14-year-old girl receives mysterious letters asking "Who are you?" — leading her through the entire history of Western philosophy as a novel.</p>
     <p class="why-read">Why read it: The most readable introduction to philosophy ever written. Perfect for beginners and rewarding for experts.</p>
     <a class="cta-btn" style="background:#c9a84c" href="https://www.amazon.com/s?k=Sophie%27s+World+Gaarder" target="_blank">Find on Amazon</a>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="b2" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="b2" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="b2" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="b2" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">History of Philosophy</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">History of Philosophy</div></div>
   </div>
 
   <!-- ═══ 19. QUOTE — Confucius ═══ -->
   <div class="card quote" style="--accent: #d4803a" data-id="q10">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">19 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Confucius_Tang_Dynasty.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">19 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">It does not matter how slowly you go as long as you do not stop.</p>
     <p class="author-name">Confucius</p>
     <p class="author-era">The Analects · ~475 BC</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q10" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q10" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q10" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q10" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#d4803a;border-color:#d4803a40;background:#d4803a10">Confucianism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#d4803a;border-color:#d4803a40;background:#d4803a10">Confucianism</div></div>
   </div>
 
   <!-- ═══ 20. THOUGHT EXPERIMENT — The Experience Machine ═══ -->
   <div class="card thought" style="--accent: #9b73d0" data-id="t4">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">20 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Human_brain_NIH.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">20 / 25</span></div>
     <div class="section-label">Thought Experiment</div>
     <h2 class="exp-title">The Experience Machine</h2>
-    <p class="scenario">A machine can give you any experience you desire — perfect joy, success, love — forever. From inside, it feels completely real. You would never know the difference. All you have to do is plug in for life.</p>
+    <p class="scenario">A machine can give you any experience you desire — perfect joy, love, success — forever. From inside, it feels completely real. You would never know the difference. All you have to do is plug in for life.</p>
     <div class="the-q">Would you plug in? And if not — what does that tell you about what you truly value?</div>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="t4" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="t4" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="t4" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="t4" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Ethics</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Ethics</div></div>
   </div>
 
   <!-- ═══ 21. QUOTE — Wittgenstein ═══ -->
   <div class="card quote" style="--accent: #8a9cb5" data-id="q11">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">21 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ludwig_Wittgenstein.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">21 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">Whereof one cannot speak, thereof one must be silent.</p>
     <p class="author-name">Ludwig Wittgenstein</p>
     <p class="author-era">Tractatus Logico-Philosophicus · 1921</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q11" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q11" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q11" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q11" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#8a9cb5;border-color:#8a9cb540;background:#8a9cb510">Analytic</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#8a9cb5;border-color:#8a9cb540;background:#8a9cb510">Analytic</div></div>
   </div>
 
   <!-- ═══ 22. QUOTE — Epictetus ═══ -->
   <div class="card quote" style="--accent: #7a9e6b" data-id="q12">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">22 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Epicteti_Enchiridion_Latinis_versibus_adumbratum_(Oxford,_1715)_frontispiece.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">22 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">It's not what happens to you, but how you react to it that matters.</p>
     <p class="author-name">Epictetus</p>
     <p class="author-era">Enchiridion · ~135 AD · Born a slave</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q12" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q12" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q12" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q12" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#7a9e6b;border-color:#7a9e6b40;background:#7a9e6b10">Stoicism</div></div>
   </div>
 
   <!-- ═══ 23. QUOTE — Aristotle ═══ -->
   <div class="card quote" style="--accent: #c9a84c" data-id="q13">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">23 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Aristotle_Altemps_Inv8575.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">23 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">We are what we repeatedly do. Excellence, then, is not an act, but a habit.</p>
     <p class="author-name">Aristotle</p>
     <p class="author-era">Nicomachean Ethics · ~350 BC</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q13" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q13" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q13" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q13" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">Ancient Greek</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">Ancient Greek</div></div>
   </div>
 
   <!-- ═══ 24. QUOTE — Simone de Beauvoir ═══ -->
   <div class="card quote" style="--accent: #9b73d0" data-id="q14">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">24 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Simone_de_Beauvoir2.png" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">24 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">One is not born, but rather becomes, a woman.</p>
     <p class="author-name">Simone de Beauvoir</p>
     <p class="author-era">The Second Sex · 1949</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q14" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q14" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q14" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q14" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#9b73d0;border-color:#9b73d040;background:#9b73d010">Existentialism</div></div>
   </div>
 
   <!-- ═══ 25. QUOTE — Bertrand Russell ═══ -->
   <div class="card quote" style="--accent: #8a9cb5" data-id="q15">
-    <div class="app-header">
-      <span class="app-name">Sophia</span>
-      <span class="card-counter">25 / 25</span>
-    </div>
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Bertrand_Russell_1957.jpg" alt="" loading="lazy">
+    <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">25 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">The good life is one inspired by love and guided by knowledge.</p>
     <p class="author-name">Bertrand Russell</p>
     <p class="author-era">What I Believe · 1925</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q15" onclick="toggleLike(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span class="like-count">0</span>
-      </button>
-      <button class="action-btn save-btn" data-id="q15" onclick="toggleSave(this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Save</span>
-      </button>
+      <button class="action-btn like-btn" data-id="q15" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
+      <button class="action-btn save-btn" data-id="q15" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
     </div>
-    <div class="bottom-bar">
-      <div class="school-pill" style="color:#8a9cb5;border-color:#8a9cb540;background:#8a9cb510">Analytic</div>
-    </div>
+    <div class="bottom-bar"><div class="school-pill" style="color:#8a9cb5;border-color:#8a9cb540;background:#8a9cb510">Analytic</div></div>
   </div>
 
-</div><!-- end #feed -->
+</div>
 
 <script>
-  // ── State ──
   const liked  = JSON.parse(localStorage.getItem('sophia-liked')  || '{}');
   const saved  = JSON.parse(localStorage.getItem('sophia-saved')  || '{}');
   const counts = JSON.parse(localStorage.getItem('sophia-counts') || '{}');
@@ -1104,7 +837,6 @@
     } else {
       liked[id] = true;
       counts[id] = (counts[id] || 0) + 1;
-      btn.classList.remove('liked');
       btn.classList.add('liked', 'popping');
       setTimeout(() => btn.classList.remove('popping'), 250);
     }
@@ -1128,7 +860,7 @@
     localStorage.setItem('sophia-saved', JSON.stringify(saved));
   }
 
-  // ── Load persisted state ──
+  // Load persisted state
   document.querySelectorAll('.like-btn').forEach(btn => {
     const id = btn.dataset.id;
     if (liked[id]) btn.classList.add('liked');
@@ -1136,13 +868,10 @@
   });
   document.querySelectorAll('.save-btn').forEach(btn => {
     const id = btn.dataset.id;
-    if (saved[id]) {
-      btn.classList.add('saved');
-      btn.querySelector('span').textContent = 'Saved';
-    }
+    if (saved[id]) { btn.classList.add('saved'); btn.querySelector('span').textContent = 'Saved'; }
   });
 
-  // ── Progress bar ──
+  // Progress bar
   const feed = document.getElementById('feed');
   const fill = document.getElementById('progress-fill');
   feed.addEventListener('scroll', () => {
@@ -1150,22 +879,16 @@
     fill.style.height = pct + '%';
   }, { passive: true });
 
-  // ── Keyboard navigation ──
+  // Keyboard nav
   document.addEventListener('keydown', e => {
     const h = window.innerHeight;
-    if (e.key === 'ArrowDown' || e.key === 'j')
-      feed.scrollBy({ top: h, behavior: 'smooth' });
-    else if (e.key === 'ArrowUp' || e.key === 'k')
-      feed.scrollBy({ top: -h, behavior: 'smooth' });
+    if (e.key === 'ArrowDown' || e.key === 'j') feed.scrollBy({ top: h, behavior: 'smooth' });
+    else if (e.key === 'ArrowUp' || e.key === 'k') feed.scrollBy({ top: -h, behavior: 'smooth' });
   });
 
-  // ── Hide scroll hint after first scroll ──
+  // Hide scroll hint on first scroll
   const hint = document.querySelector('.scroll-hint');
-  if (hint) {
-    feed.addEventListener('scroll', () => {
-      if (feed.scrollTop > 50) hint.style.opacity = '0';
-    }, { once: true, passive: true });
-  }
+  if (hint) feed.addEventListener('scroll', () => { hint.style.opacity = '0'; }, { once: true, passive: true });
 </script>
 </body>
 </html>
