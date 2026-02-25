@@ -19,6 +19,7 @@
       color: #e8e4d9;
       font-family: 'Lora', Georgia, serif;
       -webkit-tap-highlight-color: transparent;
+      touch-action: pan-y;
     }
 
     #feed {
@@ -48,135 +49,118 @@
       background: #08080f;
     }
 
-    /* Photographer-style dark vignette overlay over bg image */
+    /* Background image — sits below all content */
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0.22;
+      z-index: -1;
+      pointer-events: none;
+      user-select: none;
+      display: block;
+    }
+
+    /* Subtle bottom gradient so text doesn't fight image */
     .card::after {
       content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at center, transparent 30%, rgba(8,8,15,0.72) 100%),
-        linear-gradient(to bottom, rgba(8,8,15,0.6) 0%, rgba(8,8,15,0.25) 45%, rgba(8,8,15,0.7) 100%);
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(8,8,15,0.55) 0%,
+        rgba(8,8,15,0.3) 40%,
+        rgba(8,8,15,0.55) 75%,
+        rgba(8,8,15,0.82) 100%);
       z-index: -1;
       pointer-events: none;
     }
 
-    /* Background image — fades in when loaded */
-    .card-bg {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      opacity: 0; /* JS controls fade-in */
-      z-index: -2;
-      pointer-events: none; user-select: none;
-      display: block;
-      transition: opacity 0.8s ease;
-    }
-
-    /* ════════════════════════════════════
-       INTRO / HOME CARD — Pure Typography
-    ════════════════════════════════════ */
+    /* ── INTRO / SHARE CARD ── */
     .intro-card {
       justify-content: center;
-      align-items: center;
       text-align: center;
-      padding: 24px 32px;
-      background: #08080f;
+      padding: 40px 32px;
     }
-    /* Inset decorative border */
-    .intro-card::before {
-      content: '';
-      position: absolute;
-      inset: 20px;
-      border: 1px solid rgba(201,168,76,0.18);
-      z-index: 2;
-      pointer-events: none;
+    .intro-card .card-bg {
+      opacity: 0.38;
+      object-position: center center;
     }
-    /* Corner ornaments */
-    .intro-card::after {
-      content: none; /* override the vignette on intro */
-    }
-    .intro-corner {
-      position: absolute;
-      width: 12px; height: 12px;
-      border-color: rgba(201,168,76,0.55);
-      border-style: solid;
-      z-index: 3;
-    }
-    .intro-corner.tl { top: 16px; left: 16px; border-width: 1px 0 0 1px; }
-    .intro-corner.tr { top: 16px; right: 16px; border-width: 1px 1px 0 0; }
-    .intro-corner.bl { bottom: 16px; left: 16px; border-width: 0 0 1px 1px; }
-    .intro-corner.br { bottom: 16px; right: 16px; border-width: 0 1px 1px 0; }
-
     .intro-eyebrow {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 9px; letter-spacing: 7px;
-      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      letter-spacing: 7px;
+      color: rgba(255,255,255,0.4);
       text-transform: uppercase;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
     .intro-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(52px, 16vw, 88px);
-      font-weight: 700; font-style: italic;
-      color: #fff; line-height: 1;
-      margin-bottom: 16px;
-      letter-spacing: -1px;
+      font-size: clamp(58px, 17vw, 104px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 14px;
     }
     .intro-rule {
-      width: 40px; height: 1px;
-      background: linear-gradient(to right, transparent, #c9a84c, transparent);
+      width: 50px; height: 1px;
+      background: #c9a84c;
       margin: 0 auto 16px;
+      opacity: 0.8;
     }
     .intro-sub {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 5px; text-transform: uppercase;
-      color: #c9a84c; margin-bottom: 28px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #c9a84c;
+      margin-bottom: 28px;
     }
     .intro-body {
-      font-family: 'Lora', serif; font-style: italic;
-      font-size: clamp(13px, 3.6vw, 15px);
-      color: rgba(232,228,217,0.5);
-      line-height: 1.85; margin-bottom: 28px;
-      max-width: 300px;
-    }
-    .intro-tags {
-      display: flex; flex-wrap: wrap;
-      justify-content: center; gap: 8px;
-      margin-bottom: 44px;
-    }
-    .intro-tag {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 9px; letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      padding: 3px 9px;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(14px, 3.8vw, 17px);
+      color: rgba(232,228,217,0.58);
+      line-height: 1.9;
+      margin-bottom: 50px;
+      max-width: 340px;
     }
     .intro-cta {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 7px;
+      position: absolute;
+      bottom: max(env(safe-area-inset-bottom, 0px) + 36px, 48px);
+      left: 0; right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
       animation: bob 2.2s ease-in-out infinite;
     }
     .intro-cta span {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 9px; letter-spacing: 5px;
+      font-size: 9px;
+      letter-spacing: 5px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.3);
     }
+    .intro-cta svg { color: rgba(255,255,255,0.25); }
 
     /* ── APP HEADER ── */
     .app-header {
-      position: absolute; top: 0; left: 0; right: 0;
+      position: absolute;
+      top: 0; left: 0; right: 0;
       padding: max(env(safe-area-inset-top), 14px) 20px 14px;
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       z-index: 10;
     }
     .app-name {
       font-family: 'Rajdhani', sans-serif;
       font-size: 12px; font-weight: 600;
-      letter-spacing: 5px; color: rgba(255,255,255,0.18);
+      letter-spacing: 5px;
+      color: rgba(255,255,255,0.18);
       text-transform: uppercase;
     }
     .card-counter {
@@ -185,36 +169,45 @@
       color: rgba(255,255,255,0.15);
     }
 
-    /* ── TikTok-style SIDEBAR ── */
+    /* ── SIDEBAR ── */
     .sidebar {
-      position: absolute; right: 14px;
-      bottom: calc(env(safe-area-inset-bottom, 0px) + 88px);
-      display: flex; flex-direction: column;
-      align-items: center; gap: 22px; z-index: 10;
+      position: absolute;
+      right: 14px;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      z-index: 10;
     }
     .action-btn {
       background: none; border: none; cursor: pointer;
       display: flex; flex-direction: column;
-      align-items: center; gap: 5px; padding: 4px;
-      color: rgba(255,255,255,0.5);
-      -webkit-tap-highlight-color: transparent; user-select: none;
+      align-items: center; gap: 5px;
+      padding: 4px;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
-    .action-btn svg { width: 28px; height: 28px; filter: drop-shadow(0 1px 6px rgba(0,0,0,0.9)); }
-    .action-btn span {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 11px; letter-spacing: 1px;
-      text-shadow: 0 1px 6px rgba(0,0,0,1);
-    }
+    .action-btn svg { width: 28px; height: 28px; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.7)); }
+    .action-btn span { font-family: 'Rajdhani', sans-serif; font-size: 11px; letter-spacing: 1px; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
     .action-btn.liked { color: #e05555; }
     .action-btn.saved { color: #c9a84c; }
-    @keyframes pop { 0%{transform:scale(1)} 40%{transform:scale(1.5)} 100%{transform:scale(1)} }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
     .action-btn.popping { animation: pop 0.25s ease; }
 
     /* ── BOTTOM BAR ── */
     .bottom-bar {
-      position: absolute; bottom: 0; left: 0; right: 0;
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
       padding: 14px 20px;
       padding-bottom: max(env(safe-area-inset-bottom), 14px);
+      background: linear-gradient(to top, rgba(8,8,15,0.92) 0%, transparent 100%);
       z-index: 10;
     }
     .school-pill {
@@ -226,23 +219,26 @@
     }
 
     /* ── PROGRESS ── */
-    #progress { position: fixed; right: 0; top: 0; width: 2px; height: 100vh; background: rgba(255,255,255,0.08); z-index: 100; }
-    #progress-fill { width: 100%; height: 0%; background: rgba(255,255,255,0.3); transition: height 0.2s; }
+    #progress { position: fixed; right: 0; top: 0; width: 2px; background: rgba(255,255,255,0.1); z-index: 100; height: 100vh; }
+    #progress-fill { width: 100%; height: 0%; background: rgba(255,255,255,0.35); transition: height 0.2s; }
 
     /* ══ QUOTE ══ */
     .quote .big-mark {
       font-family: 'Playfair Display', serif;
-      font-size: 96px; line-height: 0.65;
-      color: var(--accent, #fff); opacity: 0.14;
-      align-self: flex-start; margin-left: -6px; margin-bottom: 6px;
-      pointer-events: none;
+      font-size: 100px; line-height: 0.65;
+      color: var(--accent, #fff);
+      opacity: 0.15;
+      align-self: flex-start;
+      margin-left: -8px; margin-bottom: 4px;
+      pointer-events: none; text-shadow: 0 0 40px var(--accent, transparent);
     }
     .quote .quote-text {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(17px, 4.8vw, 27px); font-style: italic;
-      line-height: 1.65; text-align: center; max-width: 600px;
+      font-size: clamp(17px, 4.8vw, 27px);
+      font-style: italic; line-height: 1.65;
+      text-align: center; max-width: 600px;
       margin-bottom: 28px;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
     }
     .quote .author-name {
       font-family: 'Rajdhani', sans-serif;
@@ -250,40 +246,43 @@
       letter-spacing: 3.5px; text-transform: uppercase;
       color: var(--accent, #9990a0);
       margin-bottom: 5px; text-align: center;
-      text-shadow: 0 1px 8px rgba(0,0,0,1);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
     .quote .author-era {
       font-family: 'Lora', serif; font-style: italic;
-      font-size: 12px; color: rgba(122,116,136,0.9);
-      text-align: center; text-shadow: 0 1px 8px rgba(0,0,0,1);
+      font-size: 12px; color: #7a7488; text-align: center;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
 
     /* ══ SPOTLIGHT ══ */
     .spotlight .section-label {
       font-family: 'Rajdhani', sans-serif;
       font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-      color: var(--accent, #7a7488); margin-bottom: 18px; text-align: center;
-      padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: var(--accent, #7a7488);
+      margin-bottom: 18px; text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
       width: 100%; max-width: 480px;
     }
     .spotlight .phil-name {
       font-family: 'Playfair Display', serif;
       font-size: clamp(26px, 7vw, 46px); font-weight: 700;
       text-align: center; margin-bottom: 4px;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.9);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     }
     .spotlight .phil-years {
-      font-family: 'Rajdhani', sans-serif; font-size: 13px;
-      color: rgba(122,116,136,0.9); letter-spacing: 2px;
-      margin-bottom: 24px; text-align: center;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px; color: #7a7488;
+      letter-spacing: 2px; margin-bottom: 24px; text-align: center;
     }
     .facts { list-style: none; max-width: 480px; width: 100%; }
     .facts li {
       font-size: clamp(13px, 3.2vw, 14.5px);
-      color: rgba(232,228,217,0.85); padding: 10px 0;
+      color: rgba(232,228,217,0.82);
+      padding: 10px 0;
       border-bottom: 1px solid rgba(255,255,255,0.05);
       display: flex; gap: 12px; line-height: 1.55;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
     }
     .facts li::before { content: '—'; color: var(--accent, #7a7488); flex-shrink: 0; }
 
@@ -291,27 +290,30 @@
     .thought .section-label {
       font-family: 'Rajdhani', sans-serif;
       font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-      color: var(--accent, #7a7488); margin-bottom: 14px; text-align: center;
+      color: var(--accent, #7a7488);
+      margin-bottom: 14px; text-align: center;
     }
     .thought .exp-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(22px, 5.5vw, 36px); font-weight: 700;
       text-align: center; margin-bottom: 22px;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.9);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     }
     .thought .scenario {
-      font-size: clamp(13px, 3.4vw, 15px); line-height: 1.8;
-      color: rgba(232,228,217,0.8); max-width: 500px;
-      text-align: center; margin-bottom: 22px;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+      font-size: clamp(13px, 3.4vw, 15px);
+      line-height: 1.8; color: rgba(232,228,217,0.78);
+      max-width: 500px; text-align: center; margin-bottom: 22px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
     }
     .thought .the-q {
       font-family: 'Playfair Display', serif; font-style: italic;
       font-size: clamp(14px, 3.6vw, 17px);
-      color: var(--accent, #e8e4d9); max-width: 460px; text-align: center;
+      color: var(--accent, #e8e4d9);
+      max-width: 460px; text-align: center;
       padding: 16px 20px;
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 4px; background: rgba(8,8,15,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      background: rgba(8,8,15,0.4);
     }
 
     /* ══ BOOK REC ══ */
@@ -325,18 +327,18 @@
       font-family: 'Playfair Display', serif;
       font-size: clamp(20px, 5vw, 32px); font-weight: 700;
       text-align: center; margin-bottom: 6px;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
     }
     .book .book-author {
-      font-family: 'Rajdhani', sans-serif; font-size: 11px;
-      letter-spacing: 3px; text-transform: uppercase;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
       color: var(--accent, #7a7488); margin-bottom: 20px; text-align: center;
     }
     .book .book-desc {
-      font-size: clamp(13px, 3.4vw, 14.5px); line-height: 1.8;
-      color: rgba(232,228,217,0.75); max-width: 460px;
-      text-align: center; margin-bottom: 12px;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+      font-size: clamp(13px, 3.4vw, 14.5px);
+      line-height: 1.8; color: rgba(232,228,217,0.72);
+      max-width: 460px; text-align: center; margin-bottom: 12px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
     }
     .book .why-read {
       font-family: 'Playfair Display', serif; font-style: italic;
@@ -350,13 +352,17 @@
       background: var(--accent, #c9a84c);
       border: none; padding: 13px 30px; border-radius: 2px;
       cursor: pointer; text-decoration: none; display: inline-block;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .ad-card { background: #0c0910; }
     .ad-label {
-      position: absolute; top: max(env(safe-area-inset-top, 0px), 14px); right: 20px; z-index: 11;
-      font-family: 'Rajdhani', sans-serif; font-size: 9px;
-      letter-spacing: 2px; color: rgba(255,255,255,0.2); text-transform: uppercase;
+      position: absolute;
+      top: max(env(safe-area-inset-top, 0px), 14px);
+      right: 20px; z-index: 11;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 9px; letter-spacing: 2px;
+      color: rgba(255,255,255,0.2); text-transform: uppercase;
     }
 
     /* ── SCROLL HINT ── */
@@ -364,12 +370,15 @@
       position: absolute;
       bottom: calc(env(safe-area-inset-bottom, 0px) + 60px);
       left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 5px;
-      pointer-events: none; animation: bob 2.2s ease-in-out infinite;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+      pointer-events: none;
+      animation: bob 2.2s ease-in-out infinite;
     }
     .scroll-hint span {
-      font-family: 'Rajdhani', sans-serif; font-size: 9px;
-      letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.22);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 9px; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.22);
     }
     .scroll-hint svg { color: rgba(255,255,255,0.18); }
 
@@ -381,11 +390,6 @@
     @media (max-width: 380px) {
       .card { padding: 68px 20px 96px; }
       .quote .quote-text { font-size: 16px; }
-      .intro-card::before { inset: 14px; }
-      .intro-corner.tl { top: 10px; left: 10px; }
-      .intro-corner.tr { top: 10px; right: 10px; }
-      .intro-corner.bl { bottom: 10px; left: 10px; }
-      .intro-corner.br { bottom: 10px; right: 10px; }
     }
   </style>
 </head>
@@ -395,49 +399,45 @@
 
 <div id="feed">
 
-  <!-- ═══ HOME / SHARE CARD ═══ -->
+  <!-- ═══ INTRO / SHARE CARD — Roman Forum ═══ -->
   <div class="card intro-card" data-id="intro">
-    <div class="intro-corner tl"></div>
-    <div class="intro-corner tr"></div>
-    <div class="intro-corner bl"></div>
-    <div class="intro-corner br"></div>
     <p class="intro-eyebrow">A gift for you</p>
     <h1 class="intro-title">Sophia</h1>
     <div class="intro-rule"></div>
     <p class="intro-sub">TikTok for Philosophy</p>
     <p class="intro-body">From the Roman Forum where Cicero once spoke — to the questions that still have no answer.</p>
-    <div class="intro-tags">
-      <span class="intro-tag">Stoicism</span>
-      <span class="intro-tag">Existentialism</span>
-      <span class="intro-tag">Taoism</span>
-      <span class="intro-tag">Absurdism</span>
-      <span class="intro-tag">Ancient Greek</span>
-    </div>
+    <p class="intro-body" style="margin-top:-32px; font-size: clamp(11px,3vw,13px)">Quotes &nbsp;·&nbsp; Thought Experiments &nbsp;·&nbsp; Books</p>
     <div class="intro-cta">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
       <span>Scroll to begin</span>
     </div>
   </div>
 
   <!-- ═══ 1. QUOTE — Socrates ═══ -->
-  <div class="card quote" style="--accent:#c9a84c" data-id="q1" data-wiki="Socrates">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #c9a84c" data-id="q1">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Socrate_du_Louvre.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">1 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">The unexamined life is not worth living.</p>
     <p class="author-name">Socrates</p>
     <p class="author-era">Athens · 469–399 BC</p>
     <div class="sidebar">
-      <button class="action-btn like-btn" data-id="q1" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
-      <button class="action-btn save-btn" data-id="q1" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
+      <button class="action-btn like-btn" data-id="q1" onclick="toggleLike(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="like-count">0</span>
+      </button>
+      <button class="action-btn save-btn" data-id="q1" onclick="toggleSave(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <span>Save</span>
+      </button>
     </div>
     <div class="bottom-bar"><div class="school-pill" style="color:#c9a84c;border-color:#c9a84c40;background:#c9a84c10">Ancient Greek</div></div>
     <div class="scroll-hint"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg><span>Scroll</span></div>
   </div>
 
   <!-- ═══ 2. SPOTLIGHT — Marcus Aurelius ═══ -->
-  <div class="card spotlight" style="--accent:#7a9e6b" data-id="s1" data-wiki="Marcus Aurelius">
-    <img class="card-bg" alt="">
+  <div class="card spotlight" style="--accent: #7a9e6b" data-id="s1">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Marcus_Aurelius_Glyptothek_Munich.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">2 / 25</span></div>
     <div class="section-label">Philosopher Spotlight</div>
     <h2 class="phil-name">Marcus Aurelius</h2>
@@ -457,8 +457,8 @@
   </div>
 
   <!-- ═══ 3. QUOTE — Marcus Aurelius ═══ -->
-  <div class="card quote" style="--accent:#7a9e6b" data-id="q2" data-wiki="Marcus Aurelius">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #7a9e6b" data-id="q2">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Marcus_Aurelius_Glyptothek_Munich.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">3 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">You have power over your mind, not outside events. Realize this, and you will find strength.</p>
@@ -472,12 +472,12 @@
   </div>
 
   <!-- ═══ 4. THOUGHT EXPERIMENT — Plato's Cave ═══ -->
-  <div class="card thought" style="--accent:#c9a84c" data-id="t1" data-wiki="Allegory of the cave">
-    <img class="card-bg" alt="">
+  <div class="card thought" style="--accent: #c9a84c" data-id="t1">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Plato_Silanion_Musei_Capitolini_MC1377.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">4 / 25</span></div>
     <div class="section-label">Thought Experiment</div>
     <h2 class="exp-title">Plato's Cave</h2>
-    <p class="scenario">Prisoners chained in a cave only see shadows on a wall — and believe the shadows are reality. One escapes, sees the sun, and returns to tell the others. They refuse to believe him.</p>
+    <p class="scenario">Prisoners are chained in a cave, only able to see shadows cast on a wall. They believe the shadows <em>are</em> reality. One prisoner escapes, sees the sun, and returns to tell the others — but they refuse to believe him.</p>
     <div class="the-q">What if everything you perceive is just a shadow of a deeper truth?</div>
     <div class="sidebar">
       <button class="action-btn like-btn" data-id="t1" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
@@ -487,8 +487,8 @@
   </div>
 
   <!-- ═══ 5. QUOTE — Nietzsche ═══ -->
-  <div class="card quote" style="--accent:#9b73d0" data-id="q3" data-wiki="Friedrich Nietzsche">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #9b73d0" data-id="q3">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Nietzsche187a.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">5 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">He who has a why to live can bear almost any how.</p>
@@ -502,14 +502,14 @@
   </div>
 
   <!-- ═══ 6. BOOK REC — Meditations ═══ -->
-  <div class="card book" style="--accent:#7a9e6b" data-id="b1" data-wiki="Meditations (Marcus Aurelius)">
-    <img class="card-bg" alt="">
+  <div class="card book" style="--accent: #7a9e6b" data-id="b1">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Marcus_Aurelius_Glyptothek_Munich.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">6 / 25</span></div>
     <div class="section-label">Book Recommendation</div>
     <div class="book-icon">📖</div>
     <h2 class="book-title">Meditations</h2>
     <p class="book-author">Marcus Aurelius · 161–180 AD</p>
-    <p class="book-desc">A Roman emperor's private journal — raw, honest reflections on how to live well amid chaos, loss, and power. Written for himself, not for us.</p>
+    <p class="book-desc">A Roman emperor's private journal — raw, honest reflections on how to live a good life amid chaos, loss, and power. Written for himself, not for us.</p>
     <p class="why-read">Why read it: The most practical philosophy book ever written. Open to any page and find something immediately useful.</p>
     <a class="cta-btn" href="https://www.amazon.com/s?k=Meditations+Marcus+Aurelius" target="_blank">Find on Amazon</a>
     <div class="sidebar">
@@ -520,8 +520,8 @@
   </div>
 
   <!-- ═══ 7. QUOTE — Seneca ═══ -->
-  <div class="card quote" style="--accent:#7a9e6b" data-id="q4" data-wiki="Seneca the Younger">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #7a9e6b" data-id="q4">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Pseudo-Seneca_MAN_Napoli_Inv5616.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">7 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">We suffer more in imagination than in reality.</p>
@@ -535,13 +535,13 @@
   </div>
 
   <!-- ═══ 8. THOUGHT EXPERIMENT — Ship of Theseus ═══ -->
-  <div class="card thought" style="--accent:#5ca8d4" data-id="t2" data-wiki="Trireme">
-    <img class="card-bg" alt="">
+  <div class="card thought" style="--accent: #5ca8d4" data-id="t2">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Olympias_1987.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">8 / 25</span></div>
     <div class="section-label">Thought Experiment</div>
     <h2 class="exp-title">Ship of Theseus</h2>
-    <p class="scenario">Every plank of Theseus's ship is replaced, one by one, until no original wood remains. Then someone rebuilds it using all the old planks.</p>
-    <div class="the-q">Which ship is the real one? And what does that tell us about identity?</div>
+    <p class="scenario">Theseus's ship is preserved as a monument. As planks rot, each is replaced — one by one — until eventually every single piece of wood is new. Then someone rebuilds the original ship using all the old planks.</p>
+    <div class="the-q">Which ship is truly the Ship of Theseus? And what does that tell us about identity?</div>
     <div class="sidebar">
       <button class="action-btn like-btn" data-id="t2" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
       <button class="action-btn save-btn" data-id="t2" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
@@ -550,11 +550,11 @@
   </div>
 
   <!-- ═══ 9. QUOTE — Sartre ═══ -->
-  <div class="card quote" style="--accent:#9b73d0" data-id="q5" data-wiki="Jean-Paul Sartre">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #9b73d0" data-id="q5">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jean_Paul_Sartre_1965.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">9 / 25</span></div>
     <div class="big-mark">"</div>
-    <p class="quote-text">Man is condemned to be free. Once cast into the world, he is responsible for everything he does.</p>
+    <p class="quote-text">Man is condemned to be free. Condemned because he did not create himself, yet is nonetheless free; because, once cast into the world, he is responsible for everything he does.</p>
     <p class="author-name">Jean-Paul Sartre</p>
     <p class="author-era">Existentialism is a Humanism · 1946</p>
     <div class="sidebar">
@@ -565,8 +565,8 @@
   </div>
 
   <!-- ═══ 10. SPOTLIGHT — Nietzsche ═══ -->
-  <div class="card spotlight" style="--accent:#9b73d0" data-id="s2" data-wiki="Friedrich Nietzsche">
-    <img class="card-bg" alt="">
+  <div class="card spotlight" style="--accent: #9b73d0" data-id="s2">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Nietzsche187a.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">10 / 25</span></div>
     <div class="section-label">Philosopher Spotlight</div>
     <h2 class="phil-name">Friedrich Nietzsche</h2>
@@ -575,7 +575,7 @@
       <li>Declared "God is dead" — not as celebration, but as a diagnosis of modern culture</li>
       <li>Introduced <em>Übermensch</em>: the individual who creates their own values</li>
       <li>Suffered a mental breakdown in 1889 and never recovered</li>
-      <li>Close friends with Richard Wagner before a dramatic public falling out</li>
+      <li>Close friends with composer Richard Wagner before a dramatic falling out</li>
       <li>His answer to suffering: passionate creative will — not escape</li>
     </ul>
     <div class="sidebar">
@@ -586,8 +586,8 @@
   </div>
 
   <!-- ═══ 11. QUOTE — Camus ═══ -->
-  <div class="card quote" style="--accent:#e06b5a" data-id="q6" data-wiki="Albert Camus">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #e06b5a" data-id="q6">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Albert_Camus.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">11 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">One must imagine Sisyphus happy.</p>
@@ -601,8 +601,8 @@
   </div>
 
   <!-- ═══ 12. AD — Man's Search for Meaning ═══ -->
-  <div class="card book ad-card" style="--accent:#4ab89a" data-id="ad1" data-wiki="Viktor Frankl">
-    <img class="card-bg" alt="">
+  <div class="card book ad-card" style="--accent: #4ab89a" data-id="ad1">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Viktor_Frankl2.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">12 / 25</span></div>
     <div class="ad-label">Featured</div>
     <div class="section-label">Essential Reading</div>
@@ -620,8 +620,8 @@
   </div>
 
   <!-- ═══ 13. QUOTE — Lao Tzu ═══ -->
-  <div class="card quote" style="--accent:#5ca8d4" data-id="q7" data-wiki="Laozi">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #5ca8d4" data-id="q7">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">13 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">Nature does not hurry, yet everything is accomplished.</p>
@@ -635,13 +635,13 @@
   </div>
 
   <!-- ═══ 14. THOUGHT EXPERIMENT — Trolley Problem ═══ -->
-  <div class="card thought" style="--accent:#e06b5a" data-id="t3" data-wiki="Trolley problem">
-    <img class="card-bg" alt="">
+  <div class="card thought" style="--accent: #e06b5a" data-id="t3">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Fotothek_df_ps_0000010_Straßenbahn_%5E_Straßenbahnlinie.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">14 / 25</span></div>
     <div class="section-label">Thought Experiment</div>
     <h2 class="exp-title">The Trolley Problem</h2>
-    <p class="scenario">A runaway trolley heads toward five people. You can divert it — but one person is on the side track. Do nothing: five die. Act: one dies.</p>
-    <div class="the-q">Is there a moral difference between killing and letting die?</div>
+    <p class="scenario">A runaway trolley is heading toward five people tied to the tracks. You can pull a lever to divert it — but one person is on the side track. Do nothing: five die. Act: one dies.</p>
+    <div class="the-q">Is there a moral difference between killing and letting die? Does intention matter — or only outcome?</div>
     <div class="sidebar">
       <button class="action-btn like-btn" data-id="t3" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
       <button class="action-btn save-btn" data-id="t3" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Save</span></button>
@@ -650,8 +650,8 @@
   </div>
 
   <!-- ═══ 15. QUOTE — Descartes ═══ -->
-  <div class="card quote" style="--accent:#4ab89a" data-id="q8" data-wiki="René Descartes">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #4ab89a" data-id="q8">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">15 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">I think, therefore I am.</p>
@@ -665,8 +665,8 @@
   </div>
 
   <!-- ═══ 16. SPOTLIGHT — Albert Camus ═══ -->
-  <div class="card spotlight" style="--accent:#e06b5a" data-id="s3" data-wiki="Albert Camus">
-    <img class="card-bg" alt="">
+  <div class="card spotlight" style="--accent: #e06b5a" data-id="s3">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Albert_Camus.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">16 / 25</span></div>
     <div class="section-label">Philosopher Spotlight</div>
     <h2 class="phil-name">Albert Camus</h2>
@@ -674,9 +674,9 @@
     <ul class="facts">
       <li>Nobel Prize in Literature at 44 — one of the youngest recipients ever</li>
       <li>Central idea: life is absurd, but the answer is defiant joy — not despair</li>
-      <li><em>The Stranger</em> opens: "Mother died today. Or maybe yesterday."</li>
-      <li>Rejected the "existentialist" label — he and Sartre had a famous falling out</li>
-      <li>Died in a car crash at 46 — a train ticket was found in his pocket</li>
+      <li><em>The Stranger</em> opens with: "Mother died today. Or maybe yesterday."</li>
+      <li>Rejected the "existentialist" label — he and Sartre had a famous public falling out</li>
+      <li>Died in a car accident at 46 — a train ticket was found in his pocket</li>
     </ul>
     <div class="sidebar">
       <button class="action-btn like-btn" data-id="s3" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
@@ -686,8 +686,8 @@
   </div>
 
   <!-- ═══ 17. QUOTE — Kierkegaard ═══ -->
-  <div class="card quote" style="--accent:#9b73d0" data-id="q9" data-wiki="Søren Kierkegaard">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #9b73d0" data-id="q9">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/S%C3%B8ren_Kierkegaard_(1813-1855).jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">17 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">Life can only be understood backwards; but it must be lived forwards.</p>
@@ -701,15 +701,15 @@
   </div>
 
   <!-- ═══ 18. BOOK REC — Sophie's World ═══ -->
-  <div class="card book" style="--accent:#c9a84c" data-id="b2" data-wiki="Sophie's World">
-    <img class="card-bg" alt="">
+  <div class="card book" style="--accent: #c9a84c" data-id="b2">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Blue_Marble_(remastered).jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">18 / 25</span></div>
     <div class="section-label">Book Recommendation</div>
     <div class="book-icon">🌍</div>
     <h2 class="book-title">Sophie's World</h2>
     <p class="book-author">Jostein Gaarder · 1991</p>
-    <p class="book-desc">A 14-year-old girl receives mysterious letters asking "Who are you?" — and is guided through the entire history of Western philosophy as a novel.</p>
-    <p class="why-read">Why read it: The most readable introduction to philosophy ever written. Perfect for any age.</p>
+    <p class="book-desc">A 14-year-old girl receives mysterious letters asking "Who are you?" — leading her through the entire history of Western philosophy as a novel.</p>
+    <p class="why-read">Why read it: The most readable introduction to philosophy ever written. Perfect for beginners and rewarding for experts.</p>
     <a class="cta-btn" style="background:#c9a84c" href="https://www.amazon.com/s?k=Sophie%27s+World+Gaarder" target="_blank">Find on Amazon</a>
     <div class="sidebar">
       <button class="action-btn like-btn" data-id="b2" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
@@ -719,8 +719,8 @@
   </div>
 
   <!-- ═══ 19. QUOTE — Confucius ═══ -->
-  <div class="card quote" style="--accent:#d4803a" data-id="q10" data-wiki="Confucius">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #d4803a" data-id="q10">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Confucius_Tang_Dynasty.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">19 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">It does not matter how slowly you go as long as you do not stop.</p>
@@ -734,12 +734,12 @@
   </div>
 
   <!-- ═══ 20. THOUGHT EXPERIMENT — The Experience Machine ═══ -->
-  <div class="card thought" style="--accent:#9b73d0" data-id="t4" data-wiki="Experience machine">
-    <img class="card-bg" alt="">
+  <div class="card thought" style="--accent: #9b73d0" data-id="t4">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Human_brain_NIH.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">20 / 25</span></div>
     <div class="section-label">Thought Experiment</div>
     <h2 class="exp-title">The Experience Machine</h2>
-    <p class="scenario">A machine can give you any experience you desire — perfect joy, love, success — forever. From inside, it feels completely real. All you have to do is plug in for life.</p>
+    <p class="scenario">A machine can give you any experience you desire — perfect joy, love, success — forever. From inside, it feels completely real. You would never know the difference. All you have to do is plug in for life.</p>
     <div class="the-q">Would you plug in? And if not — what does that tell you about what you truly value?</div>
     <div class="sidebar">
       <button class="action-btn like-btn" data-id="t4" onclick="toggleLike(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">0</span></button>
@@ -749,8 +749,8 @@
   </div>
 
   <!-- ═══ 21. QUOTE — Wittgenstein ═══ -->
-  <div class="card quote" style="--accent:#8a9cb5" data-id="q11" data-wiki="Ludwig Wittgenstein">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #8a9cb5" data-id="q11">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ludwig_Wittgenstein.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">21 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">Whereof one cannot speak, thereof one must be silent.</p>
@@ -764,8 +764,8 @@
   </div>
 
   <!-- ═══ 22. QUOTE — Epictetus ═══ -->
-  <div class="card quote" style="--accent:#7a9e6b" data-id="q12" data-wiki="Epictetus">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #7a9e6b" data-id="q12">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Epicteti_Enchiridion_Latinis_versibus_adumbratum_(Oxford,_1715)_frontispiece.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">22 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">It's not what happens to you, but how you react to it that matters.</p>
@@ -779,8 +779,8 @@
   </div>
 
   <!-- ═══ 23. QUOTE — Aristotle ═══ -->
-  <div class="card quote" style="--accent:#c9a84c" data-id="q13" data-wiki="Aristotle">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #c9a84c" data-id="q13">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Aristotle_Altemps_Inv8575.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">23 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">We are what we repeatedly do. Excellence, then, is not an act, but a habit.</p>
@@ -794,8 +794,8 @@
   </div>
 
   <!-- ═══ 24. QUOTE — Simone de Beauvoir ═══ -->
-  <div class="card quote" style="--accent:#9b73d0" data-id="q14" data-wiki="Simone de Beauvoir">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #9b73d0" data-id="q14">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Simone_de_Beauvoir2.png" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">24 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">One is not born, but rather becomes, a woman.</p>
@@ -809,8 +809,8 @@
   </div>
 
   <!-- ═══ 25. QUOTE — Bertrand Russell ═══ -->
-  <div class="card quote" style="--accent:#8a9cb5" data-id="q15" data-wiki="Bertrand Russell">
-    <img class="card-bg" alt="">
+  <div class="card quote" style="--accent: #8a9cb5" data-id="q15">
+    <img class="card-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Bertrand_Russell_1957.jpg" alt="" loading="lazy">
     <div class="app-header"><span class="app-name">Sophia</span><span class="card-counter">25 / 25</span></div>
     <div class="big-mark">"</div>
     <p class="quote-text">The good life is one inspired by love and guided by knowledge.</p>
@@ -826,7 +826,6 @@
 </div>
 
 <script>
-  // ── Like / Save ──────────────────────────────────────────
   const liked  = JSON.parse(localStorage.getItem('sophia-liked')  || '{}');
   const saved  = JSON.parse(localStorage.getItem('sophia-saved')  || '{}');
   const counts = JSON.parse(localStorage.getItem('sophia-counts') || '{}');
@@ -874,65 +873,22 @@
     if (saved[id]) { btn.classList.add('saved'); btn.querySelector('span').textContent = 'Saved'; }
   });
 
-  // ── Wikipedia Image Lazy Loader ──────────────────────────
-  // Uses Wikipedia REST API to get real, guaranteed-working thumbnails
-  const cache = {};
-
-  function loadWikiImage(card) {
-    const wiki  = card.dataset.wiki;
-    const img   = card.querySelector('.card-bg');
-    if (!wiki || !img || img.src) return;
-
-    const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(wiki)}`;
-
-    if (cache[wiki]) {
-      applyImage(img, cache[wiki]);
-      return;
-    }
-
-    fetch(url, { cache: 'force-cache' })
-      .then(r => r.json())
-      .then(data => {
-        if (!data.thumbnail?.source) return;
-        // Upscale to 800px wide for crisp display
-        const src = data.thumbnail.source.replace(/\/\d+px-/, '/800px-');
-        cache[wiki] = src;
-        applyImage(img, src);
-      })
-      .catch(() => {}); // Dark background fallback — looks fine
-  }
-
-  function applyImage(img, src) {
-    img.onload = () => { img.style.opacity = '0.22'; };
-    img.src = src;
-  }
-
-  // IntersectionObserver — load image when card comes into view
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        loadWikiImage(e.target);
-        io.unobserve(e.target);
-      }
-    });
-  }, { rootMargin: '150px' }); // Pre-load slightly before visible
-
-  document.querySelectorAll('.card[data-wiki]').forEach(c => io.observe(c));
-
-  // ── Progress bar ──────────────────────────────────────────
+  // Progress bar
   const feed = document.getElementById('feed');
   const fill = document.getElementById('progress-fill');
   feed.addEventListener('scroll', () => {
-    fill.style.height = (feed.scrollTop / (feed.scrollHeight - feed.clientHeight) * 100) + '%';
+    const pct = feed.scrollTop / (feed.scrollHeight - feed.clientHeight) * 100;
+    fill.style.height = pct + '%';
   }, { passive: true });
 
-  // ── Keyboard nav ──────────────────────────────────────────
+  // Keyboard nav
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowDown' || e.key === 'j') feed.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
-    if (e.key === 'ArrowUp'   || e.key === 'k') feed.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+    const h = window.innerHeight;
+    if (e.key === 'ArrowDown' || e.key === 'j') feed.scrollBy({ top: h, behavior: 'smooth' });
+    else if (e.key === 'ArrowUp' || e.key === 'k') feed.scrollBy({ top: -h, behavior: 'smooth' });
   });
 
-  // ── Hide scroll hint after first scroll ───────────────────
+  // Hide scroll hint on first scroll
   const hint = document.querySelector('.scroll-hint');
   if (hint) feed.addEventListener('scroll', () => { hint.style.opacity = '0'; }, { once: true, passive: true });
 </script>
